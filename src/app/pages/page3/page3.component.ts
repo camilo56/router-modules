@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 
 @Component({
   selector: 'app-page3',
@@ -7,15 +7,15 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./page3.component.css']
 })
 export class Page3Component implements OnInit {
-  params: any;
-
+  
+  params: {keyName: string, value: string}[] = [];
   constructor(  private route: ActivatedRoute,
                 private router: Router) { }
 
   ngOnInit() {
-
-    this.params = this.route.snapshot.paramMap.get('name');
-    console.log(`name: ${this.params}`);
+    this.route.paramMap.subscribe((params: ParamMap) => {
+      this.params = params.keys.map(key => ({keyName: key, value: params.get(key)}))
+    })
 
   }
 }

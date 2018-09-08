@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -15,11 +16,10 @@ import { Page42Component } from './pages/page42/page42.component';
 import { Page43Component } from './pages/page43/page43.component';
 import { Page5Component } from './pages/page5/page5.component';
 import { Page6Component } from './pages/page6/page6.component';
+import { Pages8Component } from './pages/pages8/pages8.component';
 
 /* Modulos-------- */
 import { MiModuloModule } from './mi-modulo/mi-modulo.module';
-import { Page7Module } from './page7/page7.module';
-import { Pages8Component } from './pages/pages8/pages8.component';
 
 @NgModule({
   declarations: [
@@ -40,8 +40,8 @@ import { Pages8Component } from './pages/pages8/pages8.component';
   imports: [
     BrowserModule,
     MiModuloModule,
-    Page7Module,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

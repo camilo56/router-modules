@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, RouterStateSnapshot, Resolve } from '@angular/router';
-import { Observable, from, of } from 'rxjs';
-import { tap, delay } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -9,19 +10,14 @@ import { tap, delay } from 'rxjs/operators';
 
 export class CamiloResolveService implements Resolve<any> {
 
-  constructor() { }
+  constructor(private httpClient: HttpClient) { }
 
   resolve(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<any> | Promise<any> | boolean {
-      console.log()
-      return of([
-                    {name: "camilo", apellido: "colmenares"},
-                    {name: "camilo1", apellido: "colmenares1"},
-                    {name: "camilo2", apellido: "colmenares2"},
-                    {name: "camilo3", apellido: "colmenares3"},
-                  ]).pipe(
-                    delay(2000),
+      
+      return this.httpClient.get(`https://jsonplaceholder.typicode.com/posts?userId=${next.params.id}`)
+                  .pipe(
                     tap(info => console.log(info))
                   )
   }

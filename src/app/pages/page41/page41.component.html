@@ -1,3 +1,11 @@
-<p>
-  page41 works!
-</p>
+<h3>Soy la ruta anidada 1 Muestro usuario y redirecciono a los post del usuario selecionado</h3>
+
+<br>
+
+<div class="user" *ngFor="let user of users" (click)="goDetails(user.id)">
+    <p>id: {{user.id}}</p>
+    <p>name: {{user.name}}</p>
+    <p>username: {{user.username}}</p>
+    <p>email: {{user.email}}</p>
+    <p>city: {{user.city}}</p>
+</div>

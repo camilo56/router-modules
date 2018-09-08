@@ -20,7 +20,7 @@ export class Page2Component implements OnInit {
     this.router.navigate(['/home']);
   }
   
-  goPage2(id){
+  goPage1(id){
     this.router.navigate(['/page1', id]);
   }
 

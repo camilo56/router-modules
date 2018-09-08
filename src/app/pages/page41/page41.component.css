@@ -1,0 +1,10 @@
+.user{
+    display: flex;
+    cursor: pointer;
+}
+
+.user p{
+    margin: 0px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}

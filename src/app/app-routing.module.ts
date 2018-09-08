@@ -16,12 +16,13 @@ import { Pages8Component } from './pages/pages8/pages8.component';
 import { AuthGuard } from './auth.guard';
 import { CamiloResolveService } from './camilo-resolve.service';
 import { CanDeactiveService } from './can-deactive.service';
+import { CamiloStrategy } from './custom/camilo-strategy';
 
 
 //Servicio que retorna true para activar la ruta con un retarde de 2 segundos
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
-  { path: 'page1/:id', component: Page1Component, resolve: { users: CamiloResolveService} }, //required
+  { path: 'page1/:id', component: Page1Component, resolve: { post: CamiloResolveService} }, //required
   { path: 'page2', component: Page2Component, data: { developer: 'Camilo', dia: 'jueves' }},
   { path: 'page3', component: Page3Component},
   { 
@@ -37,16 +38,23 @@ const routes: Routes = [
         component: Page42Component
       },
       {
-        path: 'tres',
-        component: Page43Component
+        path: 'tres/:id',
+        component: Page43Component, resolve: { post: CamiloResolveService}
       },
       { path: '', redirectTo: 'uno',pathMatch: 'full'},
     ]
   },
   { path: 'page5', component: Page5Component, canActivate: [AuthGuard]},
-  { path: 'page6', component: Page6Component, resolve: { users: CamiloResolveService}},
-  { path: 'page7', loadChildren: './page7/page7.module#Page7Module', canActivate: [AuthGuard]},
+  { path: 'page6', component: Page6Component, canActivate: [AuthGuard, AuthGuard]},
+  { 
+    path: 'page7', loadChildren: './pages/page7/page7.module#Page7Module', 
+      canActivate: [AuthGuard], data: { preload: true, delay: 500 }
+    },
   { path: 'page8', component: Pages8Component, canDeactivate: [CanDeactiveService]},
+  { 
+    path: 'page9', loadChildren: './pages/page9/page9.module#Page9Module', 
+      canActivate: [AuthGuard], data: { preload: true, delay: 1000 }
+    },
   { path: '', redirectTo: '/home',pathMatch: 'full'},
   { path: '**', component: PageNotFoundComponent }
 ];
@@ -54,7 +62,7 @@ const routes: Routes = [
 
 @NgModule({
   providers: [AuthGuard, CamiloResolveService, CanDeactiveService],
-  imports: [RouterModule.forRoot(routes,  { preloadingStrategy: PreloadAllModules, /* enableTracing: true */ } )],
+  imports: [RouterModule.forRoot(routes,  { preloadingStrategy: CamiloStrategy, /* enableTracing: true */ } )],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
